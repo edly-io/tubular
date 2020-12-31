@@ -27,6 +27,7 @@ from tubular.segment_api import SegmentApi  # pylint: disable=wrong-import-posit
 from tubular.sailthru_api import SailthruApi  # pylint: disable=wrong-import-position
 from tubular.salesforce_api import SalesforceApi  # pylint: disable=wrong-import-position
 from tubular.hubspot_api import HubspotAPI  # pylint: disable=wrong-import-position
+from tubular.wordpress_api import WordPressAPI  # pylint: disable=wrong-import-position
 
 
 def _log(kind, message):
@@ -153,8 +154,11 @@ def _setup_all_apis_or_exit(fail_func, fail_code, config):
         segment_base_url = config['base_urls'].get('segment', None)
         demographics_base_url = config['base_urls'].get('demographics', None)
         license_manager_base_url = config['base_urls'].get('license_manager', None)
+        wordpress_base_url = config['base_urls'].get('wordpress', None)
         client_id = config['client_id']
         client_secret = config['client_secret']
+        wordpress_username = config['wordpress_username']
+        wordpress_app_password = config['wordpress_app_password']
         sailthru_key = config.get('sailthru_key', None)
         sailthru_secret = config.get('sailthru_secret', None)
         salesforce_user = config.get('salesforce_user', None)
@@ -225,6 +229,13 @@ def _setup_all_apis_or_exit(fail_func, fail_code, config):
                 segment_base_url,
                 segment_auth_token,
                 segment_workspace_slug
+            )
+
+        if wordpress_base_url:
+            config['WORDPRESS'] = WordPressAPI(
+                wordpress_base_url,
+                wordpress_username,
+                wordpress_app_password
             )
     except Exception as exc:  # pylint: disable=broad-except
         fail_func(fail_code, 'Unexpected error occurred!', exc)
