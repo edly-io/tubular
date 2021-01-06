@@ -1,0 +1,15 @@
+client_id: CLIENT_ID
+client_secret: CLIENT_SECRET
+wordpress_username: WORDPRESS_USERNAME
+wordpress_app_password: WORDPRESS_APP_PASSWORD
+base_urls:
+    lms: LMS_BASE_URL
+    ecommerce: ECOM_BASE_URL
+    credentials: CREDS_BASE_URL
+    wordpress: WORDPRESS_BASE_URL
+retirement_pipeline:
+    - ['RETIRING_ENROLLMENTS', 'ENROLLMENTS_COMPLETE', 'LMS', 'retirement_unenroll']
+    - ['RETIRING_LMS', 'LMS_COMPLETE', 'LMS', 'retirement_lms_retire']
+    - ['RETIRING_LMS_MISC', 'LMS_MISC_COMPLETE', 'LMS', 'retirement_lms_retire_misc']
+    - ['RETIRING_FORUM', 'FORUM_COMPLETE', 'LMS', 'retirement_retire_forum']
+    # - ['RETIRING_PROCTORING', 'PROCTORING_COMPLETE', 'LMS', 'retirement_retire_proctoring_data']
