@@ -1,9 +1,10 @@
 client_id: "{{ CLIENT_ID }}"
 client_secret: "{{ CLIENT_SECRE }}"
-wordpress_username: "{{ WORDPRESS_USERNAME }}""
+wordpress_username: "{{ WORDPRESS_USERNAME }}"
 wordpress_app_password: "{{ WORDPRESS_APP_PASSWORD }}"
+
 base_urls:
-    lms: "{{ LMS_BASE_URL }}""
+    lms: "{{ LMS_BASE_URL }}"
     ecommerce: "{{ ECOM_BASE_URL }}"
     credentials: "{{ CREDS_BASE_URL }}"
     wordpress: "{{ WORDPRESS_BASE_URL }}"
