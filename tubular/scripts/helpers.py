@@ -28,6 +28,7 @@ from tubular.sailthru_api import SailthruApi  # pylint: disable=wrong-import-pos
 from tubular.salesforce_api import SalesforceApi  # pylint: disable=wrong-import-position
 from tubular.hubspot_api import HubspotAPI  # pylint: disable=wrong-import-position
 from tubular.wordpress_api import WordPressAPI  # pylint: disable=wrong-import-position
+from tubular.panel_backend_api import PanelBackendAPI  # pylint: disable=wrong-import-position
 
 
 def _log(kind, message):
@@ -172,6 +173,8 @@ def _setup_all_apis_or_exit(fail_func, fail_code, config):
         hubspot_aws_region = config.get('hubspot_aws_region', None)
         hubspot_from_address = config.get('hubspot_from_address', None)
         hubspot_alert_email = config.get('hubspot_alert_email', None)
+        panel_backend_base_url = config['base_urls'].get('panel_backend', None)
+        panel_backend_auth_token = config.get('panel_backend_auth_token', None)
 
         for state in config['retirement_pipeline']:
             for service, service_url in (
@@ -236,6 +239,12 @@ def _setup_all_apis_or_exit(fail_func, fail_code, config):
                 wordpress_base_url,
                 wordpress_username,
                 wordpress_app_password
+            )
+
+        if panel_backend_base_url:
+            config['PANEL_BACKEND'] = PanelBackendAPI(
+                panel_backend_base_url,
+                panel_backend_auth_token
             )
     except Exception as exc:  # pylint: disable=broad-except
         fail_func(fail_code, 'Unexpected error occurred!', exc)
